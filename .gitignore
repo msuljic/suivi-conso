@@ -1,0 +1,6 @@
+data
+plots
+.DS_Store
+__pycache__
+.vscode
+/*.toml

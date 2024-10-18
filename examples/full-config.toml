@@ -1,0 +1,65 @@
+# Complete config with all options and advanced features and commentary on usage
+
+### READING #############################################
+
+[EDF_ELEC_READER] # load an EDF electricity directory
+dir_path = "data/mes-donnees-elec-XXX-XXX"
+
+[EDF_ELEC_READER_2] # load another EDF electricity directory
+dir_path = "data/mes-donnees-elec-YYY-YYY"
+
+[BASIC_FILTER_elec] # in case the data in loaded directories overlaps, remove duplicates
+remove_duplicates = "keep_first"
+
+[EDF_GAZ_READER] # load an EDF gas directory
+dir_path = "data/mes-donnees-gaz-ZZZ-ZZZ"
+variable_name = "Gaz (m3)" # rename the output column
+
+[CSV_READER] # load a csv file containing various data
+file_path = "data/path_to_file.csv"
+index_col = "Timestamp" # instead of using first column use column labeled "Timestamp"
+usecols = [2, 3, 5] # load only columns 2, 3 and 5 (all parameters are passed to pd.read_csv() as kwargs)
+
+[INFLUXDB_LP_READER] # Read data from influxdb line protocol file (e.g. output of `influx_inspect export`)
+file_path = "data/influx_backup.txt"
+multiple_fields = false # optimises reading for one field per measurement (if unsure set to true)
+
+### FILTERING #############################################
+
+[BASIC_FILTER]
+# apply filtering to data, in order as listed here
+remove_duplicates = false # do not remove duplicates
+resample = "10min" # group more frequent measurements in blocks of 10 minutes and calculate average
+start_date = "2022-10-13" # keep only data after this date
+end_date = "2024-10-01 12:13:14" # keep only data before this timestamp
+query = "`Gaz (m3)` > 0.5" # generic DataFrame.query()
+
+### PLOTTING #############################################
+
+[INFO_PRINTER] # print some info about the data to terminal
+to_csv_file = "data/my_data.csv" # save the data to a csv file
+
+[DAILY_PLOTTER] # Plots daily trend over the year
+variables = [] # list of variables to plot, empty list is interpreted as plot all
+rolling_average_days = 5 # calculate rolling average of 5 days to smooth the data
+aggfunc = "mean" # aggregator function to use (e.g. "sum" when plotting temperatures or "mean" for gas consumption)
+
+[HOURLY_PLOTTER] # Plots average hourly trend over 24 hours
+variables = [] # list of variables to plot, empty list is interpreted as plot all
+sort_by = "quarter" # how to divide data, options: 'year', 'hot-cold', 'quarter', 'weekend' or list of text queries
+aggfunc = "mean" # aggregator function, e.g. 'mean' to calculate hourly average
+
+[HOURLY_PLOTTER_GAZ] # Another instance of hourly plotter with different parameters
+variables = ["Temperature"]
+sort_by = ["index > '2023-06-03' & index < '2023-09-03'", "index > '2024-06-03' & index < '2024-09-03'"]
+aggfunc = "max"
+
+[WEEKLY_PLOTTER] # Plots trend over a week
+variables = [] # list of variables to plot, empty list is interpreted as plot all
+sort_by = "weekend" # how to divide data, options: 'year', 'hot-cold', 'quarter', 'weekend' or list of text queries
+
+[CORRELATION_PLOTTER] # Plots correlation between variables.
+# Resamples the data to match the variable measured with lower frequency.
+x_vars = "T (°C)" # list of variable names to plot on x axis, if empty plot all variables
+y_vars = ["Gas (m3)", "Electricity (kWh)"] # list of variable names to plot on y axis, if empty plot all variables
+#  Leaving both `x_vars` and `y_vars` empty will plot all possible combinations.

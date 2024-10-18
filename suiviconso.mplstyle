@@ -1,0 +1,22 @@
+# Style file for WP3 plots
+
+# Figure
+figure.subplot.bottom   : 0.10
+figure.subplot.top      : 0.93
+figure.subplot.left     : 0.10
+figure.subplot.right    : 0.95
+figure.figsize          : 9, 5
+savefig.dpi             : 300
+savefig.format          : png
+
+# Axes
+axes.prop_cycle : cycler('color', ["56B4E9", "E69F00", "009E73", "CC79A7", "0072B2", "D55E00", "F0E442"])
+
+# Image
+image.cmap : cividis
+
+# Latex text
+mathtext.default : regular
+
+# Legend
+legend.loc     : best

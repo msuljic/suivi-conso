@@ -1,0 +1,29 @@
+# Minimal config file example to read EDF electicity and gas data
+# Few options are explained in commented lines below
+
+### READERS #############################################
+
+[EDF_ELEC_READER]
+dir_path = "data/mes-donnees-elec-XXX-XXX"
+
+[EDF_GAZ_READER]
+dir_path = "data/mes-donnees-gaz-XXX-XXX"
+
+### FILTERS #############################################
+
+[BASIC_FILTER]
+# start_date = "2022-12-01 11:00:00"
+# end_date   = "2024-09-01 13:00:00"
+
+### PLOTTERS #############################################
+
+[INFO_PRINTER]
+
+[DAILY_PLOTTER]
+# rolling_average_days = 3 # smooth the data by calculating rolling of N days
+
+[HOURLY_PLOTTER]
+# sort_by = "year" # Options: 'year', 'hot-cold', 'quarter', 'weekend'
+
+[WEEKLY_PLOTTER]
+# sort_by = "year" # Options: 'year', 'hot-cold', 'quarter', 'weekend'

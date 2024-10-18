@@ -1,0 +1,31 @@
+# Config file that produces the examples plots
+
+### READERS #############################################
+
+[CSV_READER]
+file_path = "data/example.csv"
+
+### PLOTTERS #############################################
+
+[INFO_PRINTER]
+
+[DAILY_PLOTTER_elec]
+variables = ["Gas (m3)"]
+rolling_average_days = 7 # smooth the data by calculating rolling of N days
+
+[DAILY_PLOTTER_T]
+variables = ["T (°C)"]
+rolling_average_days = 1 # smooth the data by calculating rolling of N days
+aggfunc = "mean"
+
+[HOURLY_PLOTTER]
+variables = "Electricity (kWh)"
+sort_by = "weekend" # Options: 'year', 'hot-cold', 'quarter', 'weekend'
+
+[WEEKLY_PLOTTER]
+variables = ["Gas (m3)"]
+sort_by = "quarter" # Options: 'year', 'hot-cold', 'quarter'
+
+[CORRELATION_PLOTTER]
+x_vars = "T (°C)"
+y_vars = "Gas (m3)"
